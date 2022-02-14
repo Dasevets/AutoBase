@@ -8,7 +8,6 @@ import java.util.Scanner;
 Реализуйте распределение сортировку авто:
 * от меньшей цены к большей
 * Решите задачу разными методами в разных ветках, решите конфликт и сделайте commit итогового варианта на GitHub.
-
 */
 public class AutoBase {
     public static void main(String[] args) {
@@ -40,7 +39,7 @@ public class AutoBase {
             autoBase[i] = new Auto(n, p, a);
             System.out.println("Занесено в базу");
             System.out.println(" ");
-            if (n.equals("e") || p.equals("e") || a.equals("e")){
+            if (n.equals("e") || p.equals("e") || a.equals("e")) {
                 System.out.println("Выход из программы");
                 break;
             }
@@ -52,16 +51,51 @@ public class AutoBase {
             sb.append(" года.");
             System.out.println(sb);
             System.out.println(" ");
+            if (i == 4){
+                AutoCategorization ac = new AutoCategorization();
+                ac.autoCategorisation(autoBase);
+                break;
+            }
         }
     }
 }
 class Auto {
     String name;
-    String price;
+    int price;
     String age;
     public Auto(String name, String price, String age) {
         this.name = name;
-        this.price = price;
+        this.price = Integer.parseInt(price);
         this.age = age;
+    }
+}
+class AutoCategorization {
+    public void autoCategorisation(Auto[] autoBase) {
+        // первый метод сортировка
+        for (int i = 0; i < autoBase.length; i++) {
+            Auto min = autoBase[i];
+            int min_i = i;
+            for (int j = i+1; j < autoBase.length; j++) {
+                if (autoBase[j].price < min.price) {
+                    min = autoBase[j];
+                    min_i = j;
+                }
+            }
+            if (i != min_i) {
+                Auto tmp = autoBase[i];
+                autoBase[i] = autoBase[min_i];
+                autoBase[min_i] = tmp;
+            }
+        }
+
+        for(int i = 0 ; i<autoBase.length; i++) {
+            StringBuilder sb1 = new StringBuilder(autoBase[i].name);
+            sb1.append(" ");
+            sb1.append(autoBase[i].price);
+            sb1.append(" р. ");
+            sb1.append(autoBase[i].age);
+            sb1.append(" года.");
+            System.out.println(sb1);
+        }
     }
 }
